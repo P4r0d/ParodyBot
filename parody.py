@@ -45,6 +45,18 @@ async def clear(ctx, amount):
     await bot.delete_messages(messages)
     await bot.send_message(bot.get_channel('483024209430446137'), "Messages deleted.")
 
+@bot.command(pass_context=True)
+@commands.has_role("Screen Team")
+async def verify(ctx, user: discord.Member):
+    role = get(ctx.message.server.roles, name='Member')
+    if "unverified" in [y.name.lower() for y in user.roles]:
+        try:
+            await bot.replace_roles(user, role)
+            await bot.say("{} has been verified".format(user.name))
+        except:
+            await bot.say("You cannot edit {}'s role".format(user.name))
+
+
 
 
 
